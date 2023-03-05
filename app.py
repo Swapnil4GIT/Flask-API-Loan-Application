@@ -36,3 +36,26 @@ def predictions():
 
     applicant_income = loan_req["ApplicantIncome"]
     loan_amt = loan_req["LoanAmount"]/1000
+
+    input_data = [[gender, marital_status, applicant_income, loan_amt, credit_history]]
+
+    #Generate Inference
+    prediction = clf.predict(input_data)
+
+    if prediction == 0:
+        pred = "Rejected"
+    else:
+        pred = "Approved"
+
+    return {"loan_approval_status": pred}
+
+@app.route("/get_params", methods=["GET"])
+def get_application_params():
+    parameters = {
+        "Gender": "<Male/Female>",
+        "Married": "<Married/Unmarried>",
+        "ApplicantIncome": 500000,
+        "LoanAmount":50000,
+        "Credit_History": "<Cleared Debts/Uncleared Debts>"
+    }
+    return parameters
